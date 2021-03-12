@@ -1,5 +1,3 @@
-# Please complete the TODO items in this code
-
 import asyncio
 
 from confluent_kafka import Consumer, Producer
@@ -50,23 +48,6 @@ def create_topic(client, topic_name):
             raise
 
 
-def main():
-    """Checks for topic and creates the topic if it does not exist"""
-    client = AdminClient({"bootstrap.servers": BROKER_URL})
-
-    topic_name = "dan_new_topic_2"
-    exists = topic_exists(client, topic_name)
-    print(f"Topic {topic_name} exists: {exists}")
-
-    if exists is False:
-        create_topic(client, topic_name)
-
-    try:
-        asyncio.run(produce_consume(topic_name))
-    except KeyboardInterrupt as e:
-        print("shutting down")
-
-
 async def produce_consume(topic_name):
     """Runs the Producer and Consumer tasks"""
     t1 = asyncio.create_task(produce(topic_name))
@@ -99,6 +80,23 @@ async def consume(topic_name):
         else:
             print(f"consumed message {message.key()}: {message.value()}")
         await asyncio.sleep(2.5)
+
+
+def main():
+    """Checks for topic and creates the topic if it does not exist"""
+    client = AdminClient({"bootstrap.servers": BROKER_URL})
+
+    topic_name = "dan_new_topic_2"
+    exists = topic_exists(client, topic_name)
+    print(f"Topic {topic_name} exists: {exists}")
+
+    if exists is False:
+        create_topic(client, topic_name)
+
+    try:
+        asyncio.run(produce_consume(topic_name))
+    except KeyboardInterrupt as e:
+        print("shutting down")
 
 
 if __name__ == "__main__":
