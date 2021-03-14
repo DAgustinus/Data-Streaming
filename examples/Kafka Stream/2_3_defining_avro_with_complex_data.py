@@ -49,9 +49,6 @@ class ClickEvent:
                 {"name": "timestamp", "type": "string"},
                 {"name": "uri", "type": "string"},
                 {"name": "number", "type": "int"},
-                #
-                # TODO: Add the attributes map!
-                #
                 {
                     "name": "attributes",
                     "type": {
